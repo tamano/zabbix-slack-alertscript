@@ -24,8 +24,24 @@ fi
 
 # The message that we want to send to Slack is the "subject" value ($2 / $subject - that we got earlier)
 #  followed by the message that Zabbix actually sent us ($3)
-message="${subject}: $3"
+message="$3"
+
+zabbix_url="https://zabbix.eli-sys.jp/zabbix"
+link="$zabbix_url/tr_status.php"
+
+attachments=`cat <<EOF
+[
+{
+"fallback": "$subject: $message",
+"title": "$subject",
+"title_link": "$link",
+"text": "$message",
+"color": "$color"
+}
+]
+EOF
+`
 
 # Build our JSON payload and send it as a POST request to the Slack incoming web-hook URL
-payload="payload={\"channel\": \"${to}\", \"username\": \"${username}\", \"text\": \"${message}\", \"icon_emoji\": \"${emoji}\"}"
+payload="payload={\"channel\": \"${to}\", \"username\": \"${username}\", \"icon_emoji\": \"${emoji}\", \"attachments\": ${attachments}}"
 curl -m 5 --data-urlencode "${payload}" $url
