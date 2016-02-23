@@ -14,12 +14,18 @@ to="$1"
 subject="$2"
 
 # Change message emoji depending on the subject - smile (RECOVERY), frowning (PROBLEM), or ghost (for everything else)
-if [ "$subject" == 'RECOVERY' ]; then
-	emoji=':smile:'
-elif [ "$subject" == 'PROBLEM' ]; then
-	emoji=':frowning:'
+if [[ "$subject" =~ "復旧" ]]; then
+        emoji=':smile:'
+        color='good'
+elif [[ "$subject" =~ "警告" ]]; then
+        emoji=':frowning:'
+        color='warning'
+elif [[ "$subject" =~ "障害" ]]; then
+        emoji=':persevere:'
+        color='danger'
 else
-	emoji=':ghost:'
+        emoji=':ghost:'
+        color='warning'
 fi
 
 # The message that we want to send to Slack is the "subject" value ($2 / $subject - that we got earlier)
