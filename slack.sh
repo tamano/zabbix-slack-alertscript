@@ -48,6 +48,9 @@ attachments=`cat <<EOF
 EOF
 `
 
+# logging
+echo "`date -u` - Sending Slack alert to=$to, subject=$subject, status=$color" >> /var/log/zabbix/slack.log
+
 # Build our JSON payload and send it as a POST request to the Slack incoming web-hook URL
 payload="payload={\"channel\": \"${to}\", \"username\": \"${username}\", \"icon_emoji\": \"${emoji}\", \"attachments\": ${attachments}}"
 curl -m 5 --data-urlencode "${payload}" $url
