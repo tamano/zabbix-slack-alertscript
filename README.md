@@ -4,7 +4,11 @@ Zabbix Slack AlertScript
 
 About
 -----
-This is simply a Bash script that uses the custom alert script functionality within [Zabbix](http://www.zabbix.com/) along with the incoming web-hook feature of [Slack](https://slack.com/) that I got a chance to write since I could not find any already existing/similar scripts.
+This is a Bash script forked for myself from [original](https://github.com/ericoc/zabbix-slack-alertscript).
+
+#### What I've changed
+- Change message to attachments.
+- Little bit of localization (for Japanese).
 
 #### Versions
 This definitely works with Zabbix 2.0 or greater (including 2.2 and 2.4) as well as Zabbix 1.8.2!
@@ -21,7 +25,7 @@ Installation
 
 ### The script itself
 
-The ["slack.sh" script](https://github.com/ericoc/zabbix-slack-alertscript/raw/master/slack.sh) needs to be placed in the "AlertScriptsPath" directory that is specified within the Zabbix servers' configuration file (zabbix_server.conf) and must be executable by the user (usually "zabbix") running the zabbix_server binary on the Zabbix server before restarting the Zabbix server software:
+The ["slack.sh" script](https://github.com/tamano/zabbix-slack-alertscript/raw/master/slack.sh) needs to be placed in the "AlertScriptsPath" directory that is specified within the Zabbix servers' configuration file (zabbix_server.conf) and must be executable by the user (usually "zabbix") running the zabbix_server binary on the Zabbix server before restarting the Zabbix server software:
 
 	[root@zabbix ~]# grep AlertScriptsPath /etc/zabbix/zabbix_server.conf
 	### Option: AlertScriptsPath
@@ -82,9 +86,6 @@ Assuming that you have set a valid Slack web-hook URL within your "slack.sh" fil
 	$ bash slack.sh '@ericoc' PROBLEM 'Oh no! Something is wrong!'
 
 Alerting a specific user name results in the message actually coming from the "slackbot" user using a sort-of "spoofed" user name within the message. A channel alert is sent as you would normally expect from whatever user name you specify in "slack.sh":
-
-![Slack Testing](http://pictures.ericoc.com/github/slack-example.png "Slack Testing")
-
 
 More Information
 ----------------
